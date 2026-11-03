@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Práctica de Gestión de Proyectos</title>
+<title>Gestión de Proyectos</title>
 <style>
 :root{--bg:#f5f6f8;--card:#fff;--ink:#1b2430;--mute:#5d6877;--line:#d9dde3;--acc:#1f6f8b;--ok:#1f7a47;--okbg:#e3f3ea;--ko:#b3392b;--kobg:#fbe8e5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161c;--card:#1b212a;--ink:#e8ecf1;--mute:#9aa6b4;--line:#2f3844;--acc:#6bbcd8;--ok:#6fd09a;--okbg:#17332a;--ko:#f09a8e;--kobg:#3a1f1b;color-scheme:dark}}
@@ -91,7 +91,7 @@ var app=document.getElementById("app"),sel={L1:1,L2:1,L3:1,L4:1,L5:1,L6:1},shuf=
 var pool=[],i=0,shown=false,fails=[],round=1,first=null,by={},ok1=0;
 function cnt(l){return D.filter(function(d){return d[0]===l}).length}
 function setup(){
-  var h='<h1>Práctica de Gestión de Proyectos</h1><p class="sub">Elige los temas, responde en tu cabeza y marca si lo sabías.</p><div class="card">';
+  var h='<h1>Gestión de Proyectos</h1><p class="sub">Elige los temas, responde en tu cabeza y marca si lo sabías.</p><div class="card">';
   Object.keys(N).forEach(function(l){h+='<label class="opt"><input type="checkbox" data-l="'+l+'"'+(sel[l]?" checked":"")+'><span>'+l+" · "+N[l]+'</span><span class="n">'+cnt(l)+' preguntas</span></label>'});
   h+='<label class="opt"><input type="checkbox" id="sh"'+(shuf?" checked":"")+'><span>Barajar el orden</span></label></div>';
   h+='<div class="row"><button id="all">Todos los temas</button><button id="none">Ninguno</button></div><div class="row"><button class="pri" id="go">Empezar</button></div><p class="err" id="err" role="alert"></p>';
