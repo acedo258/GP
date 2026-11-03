@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Práctica de Gestión de Proyectos</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#1b2430;--mute:#5d6877;--line:#d9dde3;--acc:#1f6f8b;--ok:#1f7a47;--okbg:#e3f3ea;--ko:#b3392b;--kobg:#fbe8e5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161c;--card:#1b212a;--ink:#e8ecf1;--mute:#9aa6b4;--line:#2f3844;--acc:#6bbcd8;--ok:#6fd09a;--okbg:#17332a;--ko:#f09a8e;--kobg:#3a1f1b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12161c;--card:#1b212a;--ink:#e8ecf1;--mute:#9aa6b4;--line:#2f3844;--acc:#6bbcd8;--ok:#6fd09a;--okbg:#17332a;--ko:#f09a8e;--kobg:#3a1f1b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 16px 40px}
+h1{font:600 24px/1.25 Georgia,serif;margin:0 0 4px}
+.sub{color:var(--mute);margin:0 0 20px;font-size:15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+.q{font:500 19px/1.5 Georgia,serif;margin:0 0 14px}
+.ans{border-left:3px solid var(--acc);padding:2px 0 2px 12px;margin:14px 0;font-size:15.5px}
+.lbl{font-size:13px;color:var(--mute);margin:0 0 4px}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:10px 16px;min-height:44px}
+button:hover{border-color:var(--acc)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.pri{background:var(--acc);border-color:var(--acc);color:var(--bg);font-weight:600}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.row>button{flex:1 1 140px}
+.good{background:var(--okbg);color:var(--ok);border-color:var(--ok);font-weight:600}
+.bad{background:var(--kobg);color:var(--ko);border-color:var(--ko);font-weight:600}
+.opt{display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.opt:last-of-type{border-bottom:0}
+.opt input{width:20px;height:20px;accent-color:var(--acc)}
+.opt span.n{margin-left:auto;color:var(--mute);font-size:14px}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:0 0 16px}
+.bar>i{display:block;height:100%;background:var(--acc)}
+.big{font:600 44px/1.1 Georgia,serif;margin:6px 0}
+.err{color:var(--ko);font-size:14px;margin:10px 0 0;min-height:1em}
+table{width:100%;border-collapse:collapse;font-size:15px;margin-top:8px}
+td{padding:6px 0;border-bottom:1px solid var(--line)}td:last-child{text-align:right}
+.top{display:flex;justify-content:space-between;color:var(--mute);font-size:14px;margin-bottom:6px}
+</style></head><body><main id="app"></main>
+<script>
+var N={L1:"Introducción",L2:"RRHH e igualdad",L3:"Ciclo de vida",L4:"Selección de proyectos",L5:"Gestión del tiempo",L6:"Costes y sostenibilidad"};
+var D=[
+["L1","Defina proyecto y enumere sus cinco características.","Intento de lograr un objetivo específico con trabajos planificados, bajo seguimiento y control de fases. Es temporal, limitado, lo realizan personas, crea un producto o servicio muy definido y se elabora de forma progresiva."],
+["L1","Diferencie técnica y herramienta en gestión de proyectos, con un ejemplo de cada una.","Técnica: conocimientos prácticos para lograr un resultado concreto (exige destreza). Herramienta: instrumento que ayuda a aplicar la técnica y amplía posibilidades. Ej.: técnica = estimación PERT; herramienta = IA o software de planificación."],
+["L1","Explique el esquema entradas, técnicas y herramientas, y salidas.","Entradas: información recopilada (reuniones, datos históricos, entrevistas). Técnicas y herramientas: procedimientos y recursos que las procesan. Salidas: documentación que apoya al PM y al equipo (planes, cronogramas, estimaciones, presupuestos, manuales)."],
+["L1","¿Qué es un stakeholder? Distinga interesados internos y externos.","Individuos u organizaciones implicados o afectados, positiva o negativamente, por el proyecto. Internos: dirección, PM, organización ejecutante y equipo. Externos: cliente, gobierno, proveedores, terceros y patrocinador."],
+["L1","Describa las tres herramientas de análisis de interesados.","Matriz poder/interés (clasifica por poder e interés). Diagrama de Venn (solapamientos de intereses entre stakeholders). Matriz de participación (función de cada interesado en cada fase: participante, opinión, revisión, responsable)."],
+["L1","Sitúe en la matriz poder/interés a trabajadores, sociedad, gobierno y cliente.","Poder bajo e interés bajo: trabajadores y asociaciones. Poder bajo e interés alto: sociedad. Poder alto e interés bajo: gobierno y proveedores. Poder alto e interés alto: socios y cliente."],
+["L1","Enumere las responsabilidades del PM y los factores de éxito de un proyecto.","PM: requisitos y control de alcance, tiempo, coste, riesgos y calidad; interesados; planificación, control y organización. Éxito = tiempo, coste y calidad con cliente satisfecho. Factores: formación, comunicación correcta y compromiso de las personas."],
+["L1","¿Por qué fallan los proyectos? Cite las cifras de Gartner y las razones de Frame y Charvat.","Gartner (2022): 90 % con retraso, 50 % con sobrecoste, 50 % no cumple objetivos, 30 % cancelado. Frame: errores de estimación y de implementación. Charvat: no revisar costes y plazos, planes no seguidos, PM sin formación, objetivos cambiantes, metodología errónea, poca comunicación y pocas pruebas."],
+["L1","Explique cómo ayuda la IA en cada fase del proyecto y por qué no sustituye al PM.","Inicio: acta e interesados. Planificación: cronograma y estimaciones con datos históricos. Ejecución: recordatorios y actas. Control: detecta desviaciones. Cierre: informe y lecciones aprendidas. La decisión final y la responsabilidad siguen siendo humanas."],
+["L2","¿Qué documenta el plan de RRHH y qué requisitos tiene un organigrama?","Roles y responsabilidades, organigramas, dirección de personal, adquisición, formación, reconocimiento, seguridad e impacto en la organización. Organigrama: fácil de entender, sencillo de usar y con los elementos indispensables."],
+["L2","Defina la matriz RAM y explique la notación RASCI.","La RAM asigna responsabilidades (filas tareas, columnas roles) y acompaña a la EDT. R realiza, A aprueba (solo uno), S da soporte con recursos, C es consultado, I es informado."],
+["L2","Construya la fila RASCI de «desplegar el servidor» con PM, programador y cliente.","Programador: R. PM: A (único aprobador). Cliente: I, o C si valida requisitos. Un técnico de apoyo sería S."],
+["L2","Describa el proceso de negociación y cite principios clave.","Antes: información, objetivos, estrategias y concesiones. Durante: comunicación, observación, flexibilidad y cierre. Después: resultados, desviaciones e informe a Dirección. Principios: intereses de ambas partes, criterios objetivos, ganar-ganar, concesiones paso a paso, evitar la confrontación."],
+["L2","Explique las cuatro fases de la negociación.","Acercamiento (reglas y roles). Sinergia (propuestas y argumentos). Distanciamiento (desconexión emocional, sin ceder a presiones). Acuerdo (pactar, posponer o romper y concretar)."],
+["L2","Describa las estrategias de negociación de la matriz relación/resultado.","Relación y resultado importantes: colaborar (ganar-ganar). Solo relación: acomodar (perder para ganar). Solo resultado: competir (ganar-perder). Ninguno: evasión (perder-perder). Centro: compromiso."],
+["L2","¿Qué son los equipos virtuales y qué ventajas tienen?","Grupos con objetivo común que apenas se reúnen cara a cara. Permiten equipos de zonas distintas, experiencia especial, teletrabajo, inclusión de personas con movilidad reducida y proyectos que el coste de desplazarse habría descartado."],
+["L2","Defina liderazgo, sus cuatro actividades y por qué el estilo es situacional.","Capacidad de influir en el equipo para lograr objetivos. Actividades: dirección, representación, motivación y desarrollo. Estilos: persuadir, participar, delegar y dar órdenes. Ninguno es mejor: depende de la rapidez de decisión y la madurez del equipo."],
+["L2","Defina plan de igualdad, sus siete requisitos y sus ventajas.","Medidas ordenadas para garantizar igualdad de trato. Requisitos: compromiso, comisión de igualdad, diagnóstico, propuestas y negociación, plan en las acciones, seguimiento y evaluación. Ventajas: mejor clima, menos absentismo, retención de talento, responsabilidad corporativa y lealtad."],
+["L3","Defina ciclo de vida del proyecto, sus elementos y sus fases.","Fases en que se divide el proyecto para controlarlo; marca su inicio y final. Elementos: fases, procesos, entregables y actividades. Fases: inicio, planificación, ejecución y control, cierre."],
+["L3","¿Cómo evolucionan costes, personal, riesgo e influencia de los interesados en el ciclo de vida?","Costes y personal: bajos al inicio, suben y caen al final. Riesgo e incertidumbre: altos al inicio y bajan. Influencia de los interesados: máxima al inicio y decreciente."],
+["L3","Enuncie la triple restricción y razone por qué la calidad está en el centro.","Alcance, plazo y coste. La calidad se ve afectada al tocar cualquier vértice. Cerca del 90 % de proyectos se retrasa y el 50 % supera el presupuesto."],
+["L3","Defina las tres líneas base y qué hace el PM cuando cambian.","Alcance (suma de entregables), plazo (tiempo total) y coste (presupuesto sin contingencias). El PM distingue los cambios por mal cálculo de los pedidos o no especificados por el cliente."],
+["L3","Explique la contingencia y por qué fallan las estimaciones.","Reserva financiera, de plazos o de recursos según proyectos similares y experiencia. Fallan por optimismo, ignorar reuniones, bajas, festivos y vacaciones, no consultar proyectos anteriores, alcance mal conocido y falta de experiencia."],
+["L3","Describa la reunión de apertura y el cierre del proyecto.","Apertura: cliente, equipo e interesados declaran el inicio y conocen sus funciones. Cierre: aceptación escrita del cliente, evaluación guardada en el Project Notebook y reunión final con resumen, objetivos cumplidos, beneficios y lecciones aprendidas."],
+["L3","Diferencie entregables internos y externos y dé ejemplos de la boda de Jacobo y Marta.","Internos: ayudan al avance del propio proyecto. Externos: se entregan a un interesado externo que los aprueba. Boda: contratación → plan y contratos; pruebas → vestidos aprobados; invitaciones → invitaciones de boda."],
+["L4","¿Por qué se seleccionan proyectos? ¿Qué dice Verzuh de los modelos?","Los recursos son finitos. Verzuh: los modelos no deciden, las personas responden por la decisión, y todo modelo solo refleja una parte de la realidad."],
+["L4","Calcule el VAN: inversión 10.000 €, flujos 2.000, 3.000, 3.000, 2.000 y 5.000 €, tasa 15 %.","VAN = 2000/1,15 + 3000/1,15² + 3000/1,15³ + 2000/1,15⁴ + 5000/1,15⁵ − 10.000 = −390 €. VAN < 0: destruye valor, se rechaza."],
+["L4","Defina TIR y payback, y calcule el PP: inversión 6.000 €, flujos 1.000, 2.000 y 5.000 €.","TIR: tasa con VAN = 0; se acepta si supera la tasa de coste. Payback: tiempo de recuperación. Tras 2 años se recuperan 3.000; faltan 3.000/5.000 = 0,6 → PP = 2,6 años."],
+["L4","Calcule el ROI (inversión 1.000 €, beneficios 3.000 €) e indique limitaciones del punto de equilibrio.","ROI = (3.000 − 1.000)/1.000 × 100 = 200 %. El punto de equilibrio no recupera pérdidas pasadas, no crea reserva, no da retorno sobre la inversión y ignora el entorno."],
+["L4","Calcule la puntuación del Barrio B por atributos ponderados (pesos 0,25/0,20/0,25/0,10; puntos 3/4/3/3).","Puntos × peso y suma: 0,75 + 0,80 + 0,75 + 0,30 = 2,60. Gana la mayor puntuación."],
+["L4","Calcule el valor esperado de un nodo: 0,5→20.000, 0,3→18.000 y 0,2→12.000.","10.000 + 5.400 + 2.400 = 17.800 €."],
+["L4","Describa el método AHP.","Saaty: modelar la jerarquía, definirla, establecer prioridades y comparar por pares. Escala: 1 idéntica, 3 moderada, 5 fuerte, 7 muy fuerte, 9 extrema (2, 4, 6, 8 intermedios). Es flexible: los pesos pueden cambiarse."],
+["L5","Explique la ley de Parkinson.","El trabajo se expande hasta ocupar todo el tiempo disponible (6 días + 2 de reserva = 8). Obliga a estimar bien, no a sumar días sin criterio."],
+["L5","Defina actividad crítica, camino crítico, holgura, duración y esfuerzo.","Crítica: holgura total 0. Camino crítico: secuencia más larga, fija la duración mínima. Holgura: margen sin retrasar el fin. Duración: tiempo laboral; esfuerzo: horas-persona (2 personas × 5 días = 10 días-persona)."],
+["L5","Enumere los procesos de tiempo del PMBOK y los requisitos de PERT/CPM.","Definir y secuenciar actividades, estimar recursos y duraciones, desarrollar el cronograma y controlarlo. Requisitos: tareas finitas, secuenciadas, red conexa, sin bucles, con duración y recursos."],
+["L5","Calcule el tiempo esperado (óptimo 2, normal 4, pésimo 12) y compare PERT y CPM.","(12 + 16 + 2)/6 = 5. Equivalentes numéricamente: PERT usa tres tiempos y fuerza el análisis de riesgos; CPM usa uno, que suele inflarse hacia el pésimo."],
+["L5","A(3) precede a B(4) y C(2); B y C preceden a D(5). Calcule duración, camino crítico y holguras de C.","Duración 12; camino crítico A–B–D. Para C: HT = 7 − 3 − 2 = 2; HL = 7 − 3 − 2 = 2."],
+["L5","Diferencie holgura total, libre y por delante.","HT = TT_j − TP_i − t (puede limitar a otras tareas). HL = TP_j − TP_i − t (no afecta a ninguna). HD = TP_j − TP_i − t_i: permite empezar antes, pero acabar en TP_j."],
+["L5","Explique los cuatro tipos de precedencia.","FP: B no empieza hasta que A acaba. PP: B no empieza hasta que A empieza. PF: B no acaba hasta que A empieza. FF: B no acaba hasta que A acaba. El retardo puede ser positivo o negativo."],
+["L5","¿Qué son un diagrama de Gantt, un hito, el overwork y el underwork?","Gantt: tareas en el tiempo (topológico o lineal), con holguras. Hito: duración 0. Overwork: faltan recursos; underwork: sobran, al comparar histogramas de disponibilidad y necesidades."],
+["L6","Defina gestión de costes y diferencie costes directos e indirectos.","Estimar, presupuestar y controlar. Directos: del proyecto (mano de obra, material, formación, viajes). Indirectos: servicios generales de la organización (coste de oportunidad, alquileres generales)."],
+["L6","Compare las técnicas de estimación de costes.","Expertos: experiencia. Analogía: proyecto similar, poco precisa. Ascendente: paquetes de trabajo sumados (EDT), fiable pero lenta. PERT: (O + 4M + P)/6. Delphi: consenso anónimo en rondas con facilitador."],
+["L6","Calcule el coste de personal: 4 programadores a 80 €/h × 100 h, 2 técnicos a 90 €/h × 50 h y 1 PM a 100 €/h × 150 h.","32.000 + 9.000 + 15.000 = 56.000 €."],
+["L6","¿Qué es la EDC y con qué criterios se preseleccionan proveedores en una licitación?","EDC: desglose de costes por categorías (I+D, producción, operación, retirada), completo, bien definido y compatible con la contabilidad. Proveedores: capacidad financiera, recursos, calidad, estructura, comportamiento y experiencia."],
+["L6","Valor ganado: proyecto de 100.000 €, 50 % hecho (debería 75 %), AC 90.000 €. Calcule e interprete.","PV 75.000; EV 50.000; CV −40.000; SV −25.000; CPI ≈ 0,56; SPI ≈ 0,67; EAC ≈ 180.000 €. Sobrecoste y retraso."],
+["L6","Explique las tres fórmulas del EAC.","AC + BAC − EV (el resto según presupuesto). BAC/CPI (continúa la tendencia). AC + (BAC − EV)/(CPI × SPI) (coste y plazo). En el caso: 140.000, 180.000 y 225.000 €."],
+["L6","Cite causas de cambios de costes y la utilidad del control de cambios.","Nueva ley, petición del cliente, cambio tecnológico o estratégico, errores en la línea base y factores externos. Permite aplicar acciones correctivas cuando ocurren."],
+["L6","Defina sostenibilidad (Brundtland), sus cinco tipos y su valor añadido.","Satisfacer las necesidades actuales sin comprometer las futuras. Tipos: ambiental, económica, política, social y tecnológica. Valor: optimiza recursos, mejora la imagen y diferencia la marca."]
+];
+var app=document.getElementById("app"),sel={L1:1,L2:1,L3:1,L4:1,L5:1,L6:1},shuf=true;
+var pool=[],i=0,shown=false,fails=[],round=1,first=null,by={},ok1=0;
+function cnt(l){return D.filter(function(d){return d[0]===l}).length}
+function setup(){
+  var h='<h1>Práctica de Gestión de Proyectos</h1><p class="sub">Elige los temas, responde en tu cabeza y marca si lo sabías.</p><div class="card">';
+  Object.keys(N).forEach(function(l){h+='<label class="opt"><input type="checkbox" data-l="'+l+'"'+(sel[l]?" checked":"")+'><span>'+l+" · "+N[l]+'</span><span class="n">'+cnt(l)+' preguntas</span></label>'});
+  h+='<label class="opt"><input type="checkbox" id="sh"'+(shuf?" checked":"")+'><span>Barajar el orden</span></label></div>';
+  h+='<div class="row"><button id="all">Todos los temas</button><button id="none">Ninguno</button></div><div class="row"><button class="pri" id="go">Empezar</button></div><p class="err" id="err" role="alert"></p>';
+  app.innerHTML=h;
+  app.querySelectorAll("[data-l]").forEach(function(c){c.onchange=function(){sel[c.dataset.l]=c.checked?1:0;document.getElementById("err").textContent=""}});
+  document.getElementById("sh").onchange=function(e){shuf=e.target.checked};
+  document.getElementById("all").onclick=function(){for(var k in sel)sel[k]=1;setup()};
+  document.getElementById("none").onclick=function(){for(var k in sel)sel[k]=0;setup()};
+  document.getElementById("go").onclick=start;
+}
+function mix(a){for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1)),t=a[k];a[k]=a[j];a[j]=t}return a}
+function start(){
+  pool=D.filter(function(d){return sel[d[0]]});
+  if(!pool.length){document.getElementById("err").textContent="Elige al menos un tema.";return}
+  if(shuf)mix(pool);
+  round=1;first=null;by={};ok1=0;fails=[];i=0;shown=false;quiz();
+}
+function quiz(){
+  var c=pool[i],t=pool.length;
+  var h='<div class="top"><span>'+(round>1?"Repaso de falladas":"Pregunta")+" "+(i+1)+" de "+t+'</span><span>'+c[0]+" · "+N[c[0]]+'</span></div><div class="bar"><i style="width:'+Math.round(i/t*100)+'%"></i></div><div class="card"><p class="q">'+c[1]+'</p>';
+  if(!shown)h+='<div class="row"><button class="pri" id="rev">Mostrar respuesta</button></div>';
+  else h+='<p class="lbl">Respuesta modelo</p><div class="ans">'+c[2]+'</div><p class="lbl">¿La habías dicho bien?</p><div class="row"><button class="good" id="yes">La sabía</button><button class="bad" id="no">La fallé</button></div>';
+  h+='</div><div class="row"><button id="quit">Salir</button></div>';
+  app.innerHTML=h;
+  if(!shown)document.getElementById("rev").onclick=function(){shown=true;quiz()};
+  else{document.getElementById("yes").onclick=function(){mark(true)};document.getElementById("no").onclick=function(){mark(false)}}
+  document.getElementById("quit").onclick=setup;
+}
+function mark(good){
+  var c=pool[i];
+  if(round===1){by[c[0]]=by[c[0]]||[0,0];by[c[0]][1]++;if(good){by[c[0]][0]++;ok1++}}
+  if(!good)fails.push(c);
+  i++;shown=false;
+  if(i<pool.length)quiz();else result();
+}
+function result(){
+  var t=pool.length,ok=t-fails.length;
+  if(round===1)first={ok:ok1,n:t};
+  var p=Math.round(first.ok/first.n*100),h='<h1>'+(round===1?"Resultado":"Repaso terminado")+'</h1>';
+  if(round>1)h+='<p class="sub">En esta ronda acertaste '+ok+' de '+t+'. Tu puntuación de la primera vuelta fue '+first.ok+' de '+first.n+' ('+p+' %).</p>';
+  h+='<div class="card"><p class="lbl">Puntuación final (primera vuelta)</p><p class="big">'+first.ok+" / "+first.n+'</p><p class="sub" style="margin:0">'+p+' % de aciertos</p><table>';
+  Object.keys(by).forEach(function(l){h+='<tr><td>'+l+" · "+N[l]+'</td><td>'+by[l][0]+" / "+by[l][1]+'</td></tr>'});
+  h+='</table></div><div class="row">';
+  if(fails.length)h+='<button class="pri" id="rep">Repetir las '+fails.length+' falladas</button>';
+  else h+='<p class="sub" style="margin:0">¡Todo dominado! No quedan preguntas falladas.</p>';
+  h+='<button id="new">Elegir otros temas</button></div>';
+  app.innerHTML=h;
+  if(fails.length)document.getElementById("rep").onclick=function(){pool=shuf?mix(fails.slice()):fails.slice();fails=[];round++;i=0;shown=false;quiz()};
+  document.getElementById("new").onclick=setup;
+}
+setup();
+</script></body></html>
